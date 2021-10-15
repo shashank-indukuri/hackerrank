@@ -39,23 +39,16 @@ import sys
 
 def minimumNumber(n, password):
     # Return the minimum number of characters to make the password strong
-    numbers = "0123456789"
-    lower_case = "abcdefghijklmnopqrstuvwxyz"
-    upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    special_characters = "!@#$%^&*()-+"
-    countN, countL, countU, countS = 0, 0, 0, 0
-    if n < 6:
-        return 6 - n
-    for i in password:
-        if i in numbers:
-            countN = 1
-        elif i in lower_case:
-            countL = 1
-        elif i in upper_case:
-            countU = 1
-        else:
-            countS = 1
-    return 4 - (countN + countL + countU + countS)
+    count = 0    
+    if any(i.isdigit() for i in password)==False:
+        count+=1
+    if any(i.islower() for i in password)==False:
+        count+=1
+    if any(i.isupper() for i in password)==False:
+        count+=1
+    if any(i in '!@#$%^&*()-+' for i in password)==False:
+        count+=1
+    return max(count,6-n)
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
